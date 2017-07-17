@@ -1,0 +1,25 @@
+<div class="row persoWrapper" style="margin-top:10px;">
+  <div class="small-12 medium-11 medium-offset-1 column personPartial">
+    <div class=" row nameNick">
+      <div class="small-12 medium-8 column fullname">
+        <span class="vname"><%= pers.vname %></span> <span class="nname"><%= pers.nname %></span>
+      </div>
+      <div class="small-12 medium-4 column accname" style="text-align:right;">
+        <%= pers.nick %>
+      </div>
+    </div>
+    <div class="persData">
+      <div class="number">
+        <i class="fa fa-phone fa-2x" aria-hidden="true">&nbsp;<%= pers.number %></i>
+      </div>
+      <div class="mail">
+        <a href="mailto:<%= pers.mail %>" target="_top"><i class="fa fa-envelope-o fa-2x" aria-hidden="true">
+            <% if pers.mail.length >= 25 %> <%= pers.mail[0..25]+"..." %><% else %> <%= pers.mail %> <% end %>
+        </i></a>
+      </div>
+      <div class="stuff">
+        <%= pers.address %>
+      </div>
+    </div>
+  </div>
+</div>

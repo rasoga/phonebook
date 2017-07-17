@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="small-12 medium-3 column menuSpalte">
+    <div class="row">
+      <label>Name</label>
+      <input type="text" id="nameSearch"/>
+    </div>
+    <div class="row">
+      <div style="text-align:center;font-size:1.5em;">Vorname</div>
+      <% for i in 'A'..'Z' %>
+        <% if i == 'Z' %>
+          <a onclick="showForLetter('<%= i %>')">
+            <div class="small-2 column end letterBox">
+              <%= i %>
+            </div>
+          </a>
+        <% else %>
+          <a onclick="showForLetter('<%= i %>')">
+            <div class="small-2 column letterBox">
+              <%= i %>
+            </div>
+          </a>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="small-12 medium-9 column" id="nameCol">
+    <div style="height:10px;">&nbsp;</div>
+    <% @people.each do |pers| %>
+      <%= erb :person, :locals => { :pers => pers } %>
+    <% end %>
+  </div>
+</div>
+
