@@ -1,4 +1,5 @@
 require 'faker'
+
 class Person
   attr_accessor :vname, :nname, :nick, :mail, :address, :number
   
@@ -9,5 +10,9 @@ class Person
     @mail = Faker::Internet.email
     @address = Faker::Address.street_address + " in " + Faker::Address.city
     @number = Faker::PhoneNumber.cell_phone
+  end
+  
+  def name
+    return @vname.to_s+" "+@nname.to_s
   end
 end

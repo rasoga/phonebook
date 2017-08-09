@@ -4,6 +4,7 @@
       <label>Name</label>
       <input type="text" id="nameSearch"/>
     </div>
+    
     <div class="row">
       <div style="text-align:center;font-size:1.5em;">Vorname</div>
       <% for i in 'A'..'Z' %>
@@ -22,7 +23,16 @@
         <% end %>
       <% end %>
     </div>
+    
+    <div class="row" style="margin-top:50px;">
+      <a href="/printpdf">
+        <div class="small-12 column" style="text-align:center; border:2px white solid;">
+          Print as PDF
+        </div>
+      </a>
+    </div>
   </div>
+  
   <div class="small-12 medium-9 column" id="nameCol">
     <div style="height:10px;">&nbsp;</div>
     <% @people.each do |pers| %>
