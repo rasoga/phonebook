@@ -1,5 +1,7 @@
 require 'sinatra'
 
+set :bind, '0.0.0.0'
+
 require_relative 'classes/Person'
 
 get '/' do
@@ -8,4 +10,9 @@ get '/' do
     @people.push(Person.new())
   end
   erb :index
+end
+
+post '/print' do
+  
+  redirect '/'
 end

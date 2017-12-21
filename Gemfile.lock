@@ -4,12 +4,18 @@ GEM
     faker (1.8.4)
       i18n (~> 0.5)
     i18n (0.8.6)
+    pdf-core (0.7.0)
+    prawn (2.2.2)
+      pdf-core (~> 0.7.0)
+      ttfunk (~> 1.5)
+    ttfunk (1.5.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   faker
+  prawn
 
 BUNDLED WITH
-   1.15.1
+   1.15.3

@@ -1,6 +1,7 @@
 body {
   background-color:#990000;
   color:white;
+  font-family: "Comic Sans", Times, serif;
 }
 
 a {
@@ -17,6 +18,7 @@ a {
   color:white;
   padding:10px;
   border:2px white solid;
+  font-family: "Noto Naskh Arabic",serif;
 }
 
 .letterBox {
