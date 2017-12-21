@@ -73,7 +73,7 @@ def find_all
         p.nname = v[0]
       end
       if k.to_s == "uid"
-        p.nick = v
+        p.nick = v[0]
       end
       if k.to_s == "mail"
         p.mail = v
@@ -85,7 +85,9 @@ def find_all
         p.number = v
       end
     end
-    ret.push(p)
+    if p.nick != "unknown"
+      ret.push(p)
+    end
   }
   return ret
 end
