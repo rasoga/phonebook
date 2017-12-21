@@ -1,0 +1,4 @@
+Gemfile.lock
+views/*.aux
+views/*.log
+views/*.out

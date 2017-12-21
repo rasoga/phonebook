@@ -1,3 +1,4 @@
+require 'data_mapper'
 require 'faker'
 
 class Person
@@ -10,9 +11,5 @@ class Person
     @mail = Faker::Internet.email
     @address = Faker::Address.street_address + " in " + Faker::Address.city
     @number = Faker::PhoneNumber.cell_phone
-  end
-  
-  def name
-    return @vname.to_s+" "+@nname.to_s
   end
 end

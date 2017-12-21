@@ -1,0 +1,23 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{tikz}
+\usepackage{url}
+
+\batchmode
+
+\newcommand{\entry}[4]{
+  \begin{center}
+    \begin{tikzpicture}
+      \node[draw,thick] at (0,0) {
+        \begin{minipage}{\textwidth}
+          #1\\
+          #2\\
+          #3\\
+          \url{#4}
+        \end{minipage}
+      };
+    \end{tikzpicture}
+  \end{center}
+}
+\begin{document}
+\input{content}
+\end{document}
