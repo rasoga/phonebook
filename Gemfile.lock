@@ -4,10 +4,21 @@ GEM
     faker (1.8.4)
       i18n (~> 0.5)
     i18n (0.8.6)
+    mustermann (1.0.1)
+    net-ldap (0.16.1)
     pdf-core (0.7.0)
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
+    rack (2.0.3)
+    rack-protection (2.0.0)
+      rack
+    sinatra (2.0.0)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.0)
+      tilt (~> 2.0)
+    tilt (2.0.8)
     ttfunk (1.5.1)
 
 PLATFORMS
@@ -15,7 +26,9 @@ PLATFORMS
 
 DEPENDENCIES
   faker
+  net-ldap
   prawn
+  sinatra
 
 BUNDLED WITH
-   1.15.3
+   1.16.0
