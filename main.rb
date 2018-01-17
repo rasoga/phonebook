@@ -1,5 +1,8 @@
 require 'sinatra'
 require 'net/ldap'
+
+require "prawn"
+require "prawn/measurement_extensions"
 # encoding: UTF-8
 enable :sessions
 
@@ -16,16 +19,93 @@ before do
       @people.push(Person.new())
     end
   end
-  #sort by first name
-  @people.sort!{|a,b| a.vname <=> b.vname}
+  #sort by first name and then last name
+  @people.sort!{|a,b| (a.vname <=> b.vname).nonzero? || a.nname <=> b.nname}
 end
 
 get '/' do
   erb :index
 end
 
-post '/print' do
+get '/print' do
+  # sets root as the parent-directory of the current file
+  pub_path = File.join(File.dirname(__FILE__), 'public')
+  #First push fixed Text to PDF without use of outside information
+  @rows = 15
+  @offset = 2
+  pdf = Prawn::Document.new(:page_size => "A4") do 
+    define_grid(:columns => 2, :rows => 15, :gutter => 5)
+    stroke_color '000000'
+    #grid.show_all
+    
+    font_families.update(
+      "Comic Sans" => {
+      :normal => "/usr/share/fonts/truetype/msttcorefonts/comicbd.ttf"
+      }
+    )
+    font("Comic Sans", :size => 20)
+    
+    grid([0,0],[0,1]).bounding_box do
+      #pdf.stroke_bounds
+      pad_top(5){ indent(5){ text("Telefonliste MathPhysInfo",:align => :center, :size => 35) } }
+      stroke_horizontal_rule
+    end
+    grid([1,0],[1,1]).bounding_box do
+      #pdf.stroke_bounds
+      pad_top(5){ indent(5){ text("Menschen ohne Nummer (im LDAP) werden nicht angezeigt!",:color => 'ff0000', :align => :center, :size => 15) } }
+    end
+    go_to_page 1
+    #grid.show_all
+  end
   
+  @people.select!{|p| p.number != "unknown"}
+  
+  @people.each_with_index do |p,i|
+    j = (i + @offset) % @rows
+    puts(p.name,p.number,i,j)
+    if j == 0 and i != 0
+      #New Page
+      pdf.start_new_page
+    end
+    
+    #backgrounds
+    if j%2 == 0
+      pdf.grid([j,0], [j,1]).bounding_box do
+        pdf.transparent(0.2) do
+          pdf.stroke do
+            pdf.fill_color '000000'
+            pdf.fill_rectangle [pdf.cursor-pdf.bounds.height,pdf.cursor], pdf.bounds.width, pdf.bounds.height
+            pdf.fill_color '000000'
+          end
+        end
+      end
+    end
+  
+    #pdf.grid([j,0],[j,1]).bounding_box do
+    #  pdf.stroke_horizontal_rule
+    #end
+    pdf.grid([j,0],[j,0]).bounding_box do
+      pdf.pad_top(5){ pdf.indent(5){ pdf.text p.name } }
+    end
+    pdf.grid([j,1],[j,1]).bounding_box do
+      pdf.pad_top(5){
+        pdf.indent(5){
+          if p.number.kind_of?(Array)
+            p.number.each do |o|
+              pdf.text o
+            end
+          else
+            pdf.text p.number 
+          end
+        }
+      }
+    end
+  end
+  
+  filename = File.join(pub_path, "telefonliste.pdf")
+  pdf.render_file filename
+  send_file filename, :type => "application/pdf"
+    
   redirect '/'
 end
 
@@ -62,7 +142,6 @@ def find_all
                   "mail"
                 ]
   ret = []
-  puts "llll"
   ldap.search(:filter => search_filter, :attributes => result_attrs, :return_result => false) { |item| 
     p = Person.new()
     item.each do |k,v|
